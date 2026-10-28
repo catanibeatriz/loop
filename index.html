@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>loop. — cool kids stay in the loop</title>
+<meta name="description" content="loop. turns your IE University lectures into a 5-minute swipeable feed. Leave your email or phone to join the free pilot.">
+<meta property="og:title" content="loop. — cool kids stay in the loop">
+<meta property="og:description" content="Your IE lectures, turned into a 5-minute swipeable feed. Join the free pilot.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#F4F2F6">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%237A3CF0'/%3E%3Cpath d='M12 32c0-5 4-9 9-9 9 0 13 18 22 18 5 0 9-4 9-9s-4-9-9-9c-9 0-13 18-22 18-5 0-9-4-9-9z' fill='none' stroke='%23F4F2F6' stroke-width='6'/%3E%3Crect x='50' y='44' width='7' height='7' rx='1.5' fill='%23F4F2F6'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400..800;1,700..800&display=swap">
+<style>
+/* Layout: off-white hero with the sign-up beside a feed mockup, then short sections that all point back to the form. */
+:root{
+  --black:#0D0D0F; --black-2:#1C1A22; --white:#F4F2F6; --paper:#FFFFFF;
+  --violet:#7A3CF0; --violet-dark:#5E25D1; --lavender:#DCD0F7; --lavender-2:#ECE6FB;
+  --grey:#625E6C; --line:#E3DFEA;
+  --font:'Plus Jakarta Sans', 'Helvetica Neue', Arial, sans-serif;
+  --gl:max(16px, env(safe-area-inset-left, 0px));
+  --gr:max(16px, env(safe-area-inset-right, 0px));
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+main{overflow-x:clip}
+body{margin:0;background:var(--white);color:var(--black);font-family:var(--font);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+h1,h2,h3,p{margin:0}
+h1,h2,h3{line-height:.95;letter-spacing:-.045em;text-wrap:balance}
+:focus-visible{outline:3px solid var(--violet);outline-offset:3px;border-radius:8px}
+.wrap{max-width:1160px;margin:0 auto;padding-left:var(--gl);padding-right:var(--gr)}
+.kicker{font-size:13px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--violet)}
+
+/* brand */
+.wm{font-weight:800;letter-spacing:-.06em;line-height:1;white-space:nowrap;text-decoration:none}
+.wm i{display:inline-block;width:.2em;height:.2em;margin-left:.05em;background:var(--violet);border-radius:.035em}
+.dot{color:var(--violet)}
+.circled{position:relative;display:inline-block;padding:0 .08em}
+.circled svg{position:absolute;left:-14%;top:-18%;width:128%;height:136%;overflow:visible;pointer-events:none}
+.circled svg path{fill:none;stroke:var(--violet);stroke-width:5;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.btn{display:inline-flex;align-items:center;justify-content:center;border:0;border-radius:999px;padding:13px 26px;font:italic 800 18px/1 var(--font);letter-spacing:-.02em;text-decoration:none;cursor:pointer;transition:transform .15s ease, background .15s ease}
+.btn:hover{transform:translateY(-2px)}
+.btn-violet{background:var(--violet);color:#FFFFFF}
+.btn-violet:hover{background:var(--violet-dark)}
+.btn-white{background:var(--paper);color:var(--black)}
+.btn-outline{background:transparent;color:#FFFFFF;box-shadow:inset 0 0 0 2px #FFFFFF}
+.btn-ghost{background:transparent;color:var(--black);box-shadow:inset 0 0 0 2px var(--black)}
+
+/* header */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb, var(--white) 90%, transparent);backdrop-filter:blur(10px)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:21;background:var(--white)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;padding-block:16px}
+.top .wm{font-size:36px}
+.top .btn{padding:11px 22px;font-size:16px}
+
+/* hero */
+.hero{padding-block:40px 88px}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:56px;align-items:start}
+.hero h1{font-style:italic;font-weight:800;font-size:clamp(58px, 9vw, 120px);letter-spacing:-.055em;line-height:.9}
+.lede{font-size:clamp(19px,2.2vw,22px);color:var(--grey);max-width:34ch;margin-top:26px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.chips span{font-size:14px;font-weight:700;padding:9px 15px;border-radius:999px;background:var(--lavender);color:var(--black)}
+
+.join{margin-top:32px;background:var(--paper);border:1px solid var(--line);border-radius:28px;padding:28px;max-width:520px;box-shadow:0 24px 60px -30px rgba(122,60,240,.45)}
+.join form{display:grid;gap:14px}
+.join h2{font-style:italic;font-weight:800;font-size:28px;letter-spacing:-.04em}
+.field{display:grid;gap:6px}
+.field label{font-size:14px;font-weight:700}
+input[type=text]{width:100%;font:16px var(--font);color:var(--black);background:var(--white);border:2px solid var(--line);border-radius:14px;padding:12px 14px;min-height:52px}
+input[type=text]:focus{outline:none;border-color:var(--violet);box-shadow:0 0 0 4px var(--lavender-2)}
+.consent{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:var(--grey);line-height:1.45}
+.consent input{width:20px;height:20px;margin:1px 0 0;accent-color:var(--violet);flex:none}
+.join .btn{width:100%;padding:17px;font-size:22px}
+.status{font-size:14px;min-height:1.3em}
+.status.err{color:#B3261E}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.done{display:grid;gap:14px}
+.done h2{font-size:34px}
+.done p{color:var(--grey)}
+.done .row{display:flex;flex-wrap:wrap;gap:10px}
+.done .btn{width:auto;font-size:17px;padding:13px 22px}
+
+/* phone mockup */
+.phone-col{display:flex;flex-direction:column;align-items:center;gap:12px}
+.phone{width:min(330px,100%);aspect-ratio:9/18.5;background:var(--black);border-radius:46px;padding:13px;box-shadow:0 40px 80px -36px rgba(13,13,15,.6)}
+.screen{height:100%;border-radius:34px;background:var(--black-2);overflow:hidden;position:relative;color:var(--white)}
+.screen .bar{display:flex;justify-content:space-between;align-items:center;padding:18px 20px 0;font-size:12px;font-weight:700;color:#B7B2C2}
+.screen .bar .wm{font-size:18px;color:var(--white)}
+.slide{position:absolute;inset:50px 14px 54px;display:flex;flex-direction:column;justify-content:space-between;gap:12px;padding:22px;border-radius:26px;opacity:0;transform:translateY(40px);transition:opacity .5s ease, transform .5s ease}
+.slide.on{opacity:1;transform:none}
+.slide.up{opacity:0;transform:translateY(-40px)}
+.s-learn{background:var(--lavender);color:var(--black)}
+.s-test{background:var(--black);color:var(--white);box-shadow:inset 0 0 0 1px #2E2B36}
+.s-again{background:var(--violet);color:#FFFFFF}
+.tag{font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;opacity:.8}
+.slide h3{font-size:32px;font-weight:800;letter-spacing:-.04em;line-height:1.02}
+.slide p{font-size:15px;line-height:1.45}
+.play{align-self:flex-end;width:72px;height:72px;border-radius:22px;background:var(--lavender-2);display:grid;place-items:center}
+.play svg{width:28px;height:28px;margin-left:4px}
+.opts{display:grid;gap:10px}
+.opt{height:42px;border-radius:12px;background:#4D4A55;position:relative;display:flex;align-items:center;padding:0 14px;font-size:14px;font-weight:700}
+.opt.ok{background:#6E6A77}
+.opt.ok::after{content:"";position:absolute;right:-10px;top:50%;transform:translateY(-50%);width:36px;height:36px;border-radius:50%;background:var(--violet) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12.5l4 4 8-9' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/20px no-repeat;border:3px solid var(--black)}
+.src{font-size:12px !important;opacity:.75}
+.swipe{position:absolute;bottom:18px;left:0;right:0;text-align:center;font-size:12px;font-weight:700;color:#B7B2C2}
+.mock-note{font-size:13px;color:var(--grey)}
+
+/* sections */
+section.band{padding-block:88px}
+.band h2.big{font-size:clamp(40px,6vw,76px);font-weight:800;max-width:16ch;margin-top:14px}
+.dark{background:var(--black);color:var(--white)}
+.dark .kicker{color:var(--lavender)}
+.problem{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;align-items:end}
+.problem p{font-size:20px;max-width:44ch;color:#C9C5D2}
+.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-top:48px}
+.step{background:var(--paper);border:1px solid var(--line);border-radius:24px;padding:28px;display:grid;gap:10px;align-content:start}
+.step .n{font-style:italic;font-weight:800;font-size:20px;color:var(--violet)}
+.step h3{font-size:30px;font-weight:800}
+.step p{color:var(--grey)}
+.compare{margin-top:44px;overflow-x:auto;background:var(--paper);border:1px solid var(--line);border-radius:24px}
+table{width:100%;border-collapse:collapse;min-width:540px}
+th,td{text-align:left;padding:18px 22px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:0}
+th{font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--grey)}
+td:first-child{font-weight:800;width:32%}
+.small{font-size:15px;color:var(--grey);margin-top:16px}
+
+/* campaign */
+.campaign{background:var(--violet);color:#FFFFFF}
+.campaign .kicker{color:var(--lavender)}
+.camp{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:40px;align-items:center}
+.camp h2{font-style:italic;font-weight:800;font-size:clamp(40px,6vw,76px);margin-top:14px}
+.camp p.l{font-size:19px;color:#EDE6FF;margin-top:18px;max-width:40ch}
+.share{background:var(--violet-dark);border-radius:24px;padding:24px;display:grid;gap:14px}
+.share blockquote{margin:0;background:rgba(13,13,15,.22);border-radius:16px;padding:16px;font-size:16px;line-height:1.5;user-select:all}
+.share .row{display:flex;flex-wrap:wrap;gap:10px}
+
+/* final + footer */
+.final .wrap{display:flex;flex-wrap:wrap;gap:24px;align-items:center;justify-content:space-between}
+.final h2{font-style:italic;font-weight:800;font-size:clamp(36px,5vw,64px);max-width:15ch}
+footer{background:var(--black);color:#C9C5D2;padding-block:48px;font-size:14px}
+footer .wrap{display:grid;grid-template-columns:auto 1fr;gap:20px 56px;align-items:start}
+footer .wm{font-size:48px;color:var(--white)}
+footer .mail{color:var(--white);font-weight:700;user-select:all}
+footer .privacy{max-width:64ch;margin-top:8px}
+
+@media (max-width: 900px){
+  .hero .wrap,.problem,.camp{grid-template-columns:minmax(0,1fr)}
+  .steps{grid-template-columns:minmax(0,1fr)}
+  .phone{width:min(290px,100%)}
+  footer .wrap{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width: 460px){ .top .wm{font-size:30px} .top .btn{padding:10px 16px;font-size:15px} .join{padding:22px} }
+@media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} .slide,.btn{transition:none} .btn:hover{transform:none} }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="wm" href="#" aria-label="loop. home">loop<i></i></a>
+    <a class="btn btn-violet" href="#join">sign up</a>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <p class="kicker">For IE University students</p>
+      <h1 style="margin-top:16px">cool kids<br>stay in the<br><span class="circled">loop<span class="dot">.</span><svg viewBox="0 0 400 160" preserveAspectRatio="none" aria-hidden="true"><path d="M318 22C232 2 70 14 26 72c-30 40 40 76 170 74 128-2 196-38 184-80-8-28-62-46-138-46"/></svg></span></h1>
+      <p class="lede">Your actual IE lectures, turned into a 5-minute swipeable feed. Revise on the metro, between classes or in the coffee line.</p>
+      <div class="chips" aria-label="How it works"><span>swipe to learn</span><span>swipe to test</span><span>swipe to reinforce</span></div>
+
+      <div class="join" id="join">
+        <form id="signup" novalidate>
+          <h2>join the free pilot<span class="dot">.</span></h2>
+          <div class="hp" aria-hidden="true"><label for="company">Leave this empty</label><input id="company" name="_honey" tabindex="-1" autocomplete="off"></div>
+          <div class="field">
+            <label for="contact">Email or phone number</label>
+            <input id="contact" name="contact" type="text" inputmode="email" required autocomplete="email" maxlength="80" placeholder="you@student.ie.edu or +34 600 000 000">
+          </div>
+          <label class="consent" for="consent">
+            <input id="consent" name="consent" type="checkbox" value="yes" required>
+            <span>I agree that loop. may contact me about the pilot. Nothing else. I can ask to be removed any time.</span>
+          </label>
+          <button class="btn btn-violet" type="submit" id="submit">sign up</button>
+          <p class="status" id="status" role="status" aria-live="polite"></p>
+        </form>
+        <div class="done" id="done" hidden>
+          <p class="kicker">you’re in</p>
+          <h2>welcome to the loop<span class="dot">.</span></h2>
+          <p>We’ll message you when your first feed is ready. Want it sooner? Get your class in too.</p>
+          <div class="row">
+            <a class="btn btn-violet" id="waDone" href="https://wa.me/" target="_blank" rel="noopener">send to my class</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="phone-col">
+      <div class="phone" role="img" aria-label="Example of the loop. feed: a short explainer on microeconomics, then a quick game theory quiz, then a reminder to review a missed concept before the exam.">
+        <div class="screen" aria-hidden="true">
+          <div class="bar"><span class="wm">loop<i></i></span><span>Week 6</span></div>
+          <div class="slide s-learn on">
+            <span class="tag">learn · 60 sec</span>
+            <h3>Microeconomics in 60s</h3>
+            <p>Why prices rise when supply drops, explained with the example from your lecture.</p>
+            <span class="play"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8z" fill="#0D0D0F"/></svg></span>
+          </div>
+          <div class="slide s-test">
+            <div><span class="tag">quick check</span><h3 style="margin-top:8px">Quiz<br>Game Theory</h3></div>
+            <div class="opts"><span class="opt">Pareto optimal</span><span class="opt ok">Nash equilibrium</span><span class="opt">Dominant loss</span></div>
+            <p class="src">From: Lecture 9, slide 21</p>
+          </div>
+          <div class="slide s-again">
+            <span class="tag">back for review</span>
+            <h3>Confidence intervals</h3>
+            <p>You missed this on Tuesday. Your exam is in 9 days, so here it is again.</p>
+          </div>
+          <div class="swipe">↑ swipe</div>
+        </div>
+      </div>
+      <p class="mock-note">Example feed</p>
+    </div>
+  </div>
+</section>
+
+<section class="band dark">
+  <div class="wrap problem">
+    <div>
+      <p class="kicker">the problem</p>
+      <h2 class="big">we only review when exams force us to<span class="dot">.</span></h2>
+    </div>
+    <p>Concepts click in class, then sit in 60-slide decks nobody reopens. Reviewing feels like a whole separate study session, so it waits. Then exam week hits and we relearn the semester from generic videos that don’t match what our professor taught.</p>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+    <p class="kicker">how loop. works</p>
+    <h2 class="big">five minutes. your course. on repeat<span class="dot">.</span></h2>
+    <div class="steps">
+      <div class="step"><span class="n">1</span><h3>swipe to learn</h3><p>Short visual explanations built from your own lecture slides and readings, 30 to 90 seconds each.</p></div>
+      <div class="step"><span class="n">2</span><h3>swipe to test</h3><p>Every few cards, one quick question so you actively recall instead of just watching.</p></div>
+      <div class="step"><span class="n">3</span><h3>swipe to reinforce</h3><p>What you miss comes back before your exam. Every card links to its source slide.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="band" style="padding-top:0">
+  <div class="wrap">
+    <p class="kicker">why not just…</p>
+    <h2 class="big">built for revision, not for prompting<span class="dot">.</span></h2>
+    <div class="compare">
+      <table>
+        <thead><tr><th>What you use now</th><th>What loop. adds</th></tr></thead>
+        <tbody>
+          <tr><td>ChatGPT</td><td>No prompts to write, no re-explaining your course every time.</td></tr>
+          <tr><td>NotebookLM</td><td>A continuous, bite-sized feed instead of a sit-down document session.</td></tr>
+          <tr><td>TikTok &amp; YouTube</td><td>Content matched to your course, your professor and your syllabus.</td></tr>
+          <tr><td>Quizlet &amp; Anki</td><td>Visual explanations together with active recall and smart review.</td></tr>
+          <tr><td>Lecture slides</td><td>Quick reinforcement without opening a 60-slide deck.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="small">loop. doesn’t replace studying. It fills the gap between the lecture and sitting down to study.</p>
+  </div>
+</section>
+
+<section class="band campaign" id="campaign">
+  <div class="wrap camp">
+    <div>
+      <p class="kicker">the campaign</p>
+      <h2>#coolkidsstayintheloop</h2>
+      <p class="l">Exams are easier when your whole class revises a little every day. Send loop. to your class group and get your course into the pilot first.</p>
+    </div>
+    <div class="share">
+      <blockquote id="shareText">cool kids stay in the loop. I just joined the loop. pilot: our IE lectures as a 5-minute swipeable feed.</blockquote>
+      <div class="row">
+        <a class="btn btn-white" id="wa" href="https://wa.me/" target="_blank" rel="noopener" style="font-size:16px">send on WhatsApp</a>
+        <button class="btn btn-outline" id="copy" type="button" style="font-size:16px">copy message</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band final">
+  <div class="wrap">
+    <h2>give us 5 minutes of your scroll<span class="dot">.</span></h2>
+    <a class="btn btn-violet" href="#join" style="padding:18px 34px;font-size:22px">sign up</a>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span class="wm">loop<i></i></span>
+    <div>
+      <p>An IE University student project · Contact: <span class="mail">apploopstudy@gmail.com</span></p>
+      <p class="privacy">Privacy: we only collect the email or phone number you type in the sign-up form, delivered to our team inbox through the FormSubmit service. We use it to contact you about the pilot, never share or sell it, and delete it when the pilot ends. Email us to see or remove your data.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Each sign-up is emailed to the team inbox by FormSubmit (formsubmit.co).
+var INBOX_ENDPOINT = 'https://formsubmit.co/ajax/apploopstudy@gmail.com';
+
+(function(){
+  var isLocal = !/^https?:$/.test(location.protocol) || /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname);
+  var siteUrl = isLocal ? 'https://catanibeatriz.github.io/loop/' : location.origin + location.pathname;
+  var source = (location.search.match(/[?&]src=([\w-]{1,30})/) || [])[1] || 'direct';
+
+  // feed mockup: learn -> test -> reinforce
+  var slides = [].slice.call(document.querySelectorAll('.slide')), i = 0;
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduce) setInterval(function(){
+    var cur = slides[i], next = slides[(i + 1) % slides.length];
+    cur.classList.remove('on'); cur.classList.add('up');
+    next.classList.remove('up'); next.classList.add('on');
+    setTimeout(function(){ cur.classList.remove('up'); }, 600);
+    i = (i + 1) % slides.length;
+  }, 3200);
+
+  // share message + WhatsApp links (tagged so sign-up emails show where people came from)
+  var shareEl = document.getElementById('shareText');
+  var waText = shareEl.textContent + ' ' + siteUrl + '?src=whatsapp';
+  if (!isLocal) shareEl.textContent = waText;
+  ['wa', 'waDone'].forEach(function(id){ document.getElementById(id).href = 'https://wa.me/?text=' + encodeURIComponent(waText); });
+  var copyBtn = document.getElementById('copy');
+  copyBtn.addEventListener('click', function(){
+    function selectIt(){ var r = document.createRange(); r.selectNodeContents(shareEl); var s = getSelection(); s.removeAllRanges(); s.addRange(r); copyBtn.textContent = 'selected, press copy'; }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(waText).then(function(){ copyBtn.textContent = 'copied'; setTimeout(function(){ copyBtn.textContent = 'copy message'; }, 2000); }, selectIt);
+    } else selectIt();
+  });
+
+  // sign-up -> team inbox
+  var form = document.getElementById('signup'), status = document.getElementById('status'), btn = document.getElementById('submit'), done = document.getElementById('done');
+  function err(msg, el){ status.className = 'status err'; status.textContent = msg; if (el) el.focus(); }
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    status.className = 'status'; status.textContent = '';
+    var contact = form.contact.value.trim();
+    var isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contact);
+    var isPhone = /^\+?\d{8,15}$/.test(contact.replace(/[\s().-]/g, ''));
+    if (!isEmail && !isPhone) return err('Enter an email (you@student.ie.edu) or a phone number (+34 600 000 000).', form.contact);
+    if (!form.consent.checked) return err('Tick the box so we’re allowed to contact you about the pilot.', form.consent);
+    if (form._honey.value) { form.hidden = true; done.hidden = false; return; }
+    btn.disabled = true; btn.textContent = 'joining…';
+    var payload = { _subject: 'New loop. sign-up', _template: 'table', _captcha: 'false', contact: contact, type: isEmail ? 'email' : 'phone', source: source, consent: 'yes' };
+    var send = isLocal
+      ? new Promise(function(r){ setTimeout(r, 500); })
+      : fetch(INBOX_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(payload) })
+          .then(function(r){ if (!r.ok) throw new Error(r.status); return r.json(); })
+          .then(function(d){ if (String(d.success) !== 'true') throw new Error(d.message || 'not saved'); });
+    send.then(function(){ form.hidden = true; done.hidden = false; })
+      .catch(function(){
+        btn.disabled = false; btn.textContent = 'sign up';
+        err('We couldn’t save that. Check your connection and try again, or email apploopstudy@gmail.com.');
+      });
+  });
+})();
+</script>
+</body>
+</html>
